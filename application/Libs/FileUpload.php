@@ -1,5 +1,7 @@
 <?php
+
 namespace Mini\Libs;
+
 /**
 *    FileUpload
 *
