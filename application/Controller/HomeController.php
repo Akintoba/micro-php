@@ -5,6 +5,6 @@ class HomeController
 {
     public function index()
     {
-
+    	require VIEW . 'home/index.php';
     }
 }

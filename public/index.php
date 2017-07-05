@@ -23,6 +23,7 @@
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 // set a constant that holds the project's "application" folder, like "/var/www/application".
 define('APP', ROOT . 'application' . DIRECTORY_SEPARATOR);
+define('VIEW', ROOT . 'application/view' . DIRECTORY_SEPARATOR);
 
 // This is the auto-loader for Composer-dependencies (to load tools into your project).
 require ROOT . 'vendor/autoload.php';

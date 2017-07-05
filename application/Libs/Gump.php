@@ -1,5 +1,4 @@
 <?php
-namespace Mini\Libs;
 /**
  * GUMP - A fast, extensible PHP input validation class.
  *
