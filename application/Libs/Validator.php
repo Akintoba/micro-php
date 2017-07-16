@@ -3,7 +3,7 @@
 namespace Mini\Libs;
 
 /**
- * GUMP - A fast, extensible PHP input validation class.
+ * Validator - A fast, extensible PHP input validation class.
  *
  * @author      Sean Nieuwoudt (http://twitter.com/SeanNieuwoudt)
  * @author      Filis Futsarov (http://twitter.com/FilisCode)
@@ -11,7 +11,7 @@ namespace Mini\Libs;
  *
  * @version     1.5
  */
-class GUMP
+class Validator
 {
     // Singleton instance of GUMP
     protected static $instance = null;
