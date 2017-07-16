@@ -1,1 +1,1 @@
-<?php echo $validated['username'] ?>
+<?php print_r($validated) ?>

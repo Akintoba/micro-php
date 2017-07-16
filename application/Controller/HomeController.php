@@ -32,12 +32,7 @@ class HomeController
 
 		if($validated === false){
 			$validated = $validator->get_readable_errors(true);
-			echo $validated;
 		}
-
-		else{
-			echo "Success:";
-			print_r($validated);
-		}
+		require VIEW . 'home/validate.php';
 	}
 }
