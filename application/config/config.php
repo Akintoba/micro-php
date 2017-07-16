@@ -19,7 +19,6 @@ if (ENVIRONMENT == 'development' || ENVIRONMENT == 'dev') {
 elseif (ENVIRONMENT == 'production' || ENVIRONMENT == 'prod') {
     ini_set("display_errors", 0);
 }
-
 /**
  * Configuration for: URL
  * Here we auto-detect your applications URL and the potential sub-folder. Works perfectly on most servers and in local
@@ -42,8 +41,13 @@ elseif (ENVIRONMENT == 'production' || ENVIRONMENT == 'prod') {
  * The sub-folder. Leave it like it is, even if you don't use a sub-folder (then this will be just "/").
  *
  * URL:
- * The final, auto-detected URL (build via the segments above). If you don't want to use auto-detection,
+ * Auto-detected URL (build via the segments above). If you don't want to use auto-detection,
  * then replace this line with full URL (and sub-folder) and a trailing slash.
+ *
+ * VERSION:
+ * You can use this as a suffix for external files such as js at css so that changing the version gets
+ * the new version of the files. Example: <script src="myscript.js?v=<?php echo URL;?>"
+ *
  */
 
 define('URL_PUBLIC_FOLDER', 'public');

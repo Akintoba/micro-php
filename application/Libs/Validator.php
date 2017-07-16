@@ -2,15 +2,6 @@
 
 namespace Mini\Libs;
 
-/**
- * Validator - A fast, extensible PHP input validation class.
- *
- * @author      Sean Nieuwoudt (http://twitter.com/SeanNieuwoudt)
- * @author      Filis Futsarov (http://twitter.com/FilisCode)
- * @copyright   Copyright (c) 2017 wixelhq.com
- *
- * @version     1.5
- */
 class Validator
 {
     // Singleton instance of GUMP
@@ -444,7 +435,7 @@ class Validator
                                 if (count(array_column($this->errors, 'field')) === 0) {
                                     $this->errors[] = array(
                                         'field' => $field,
-                                        'value' => $input,
+                                        'value' => $input[$field],
                                         'rule' => $rule,
                                         'param' => $param,
                                     );
@@ -1482,7 +1473,7 @@ class Validator
         }
 
         if (function_exists('checkdnsrr')) {
-            if (checkdnsrr($url) === false) {
+            if (checkdnsrr(idn_to_ascii($url), 'A') === false) {
                 return array(
                     'field' => $field,
                     'value' => $input[$field],
@@ -1752,13 +1743,14 @@ class Validator
     }
 
     /**
-     * Determine if the provided input is a valid date (ISO 8601).
+     * Determine if the provided input is a valid date (ISO 8601)
+     * or specify a custom format.
      *
      * Usage: '<index>' => 'date'
      *
      * @param string $field
      * @param string $input date ('Y-m-d') or datetime ('Y-m-d H:i:s')
-     * @param null   $param
+     * @param string $param Custom date format
      *
      * @return mixed
      */
@@ -1768,16 +1760,33 @@ class Validator
             return;
         }
 
-        $cdate1 = date('Y-m-d', strtotime($input[$field]));
-        $cdate2 = date('Y-m-d H:i:s', strtotime($input[$field]));
+        // Default
+        if (!$param)
+        {
+            $cdate1 = date('Y-m-d', strtotime($input[$field]));
+            $cdate2 = date('Y-m-d H:i:s', strtotime($input[$field]));
 
-        if ($cdate1 != $input[$field] && $cdate2 != $input[$field]) {
-            return array(
-                'field' => $field,
-                'value' => $input[$field],
-                'rule' => __FUNCTION__,
-                'param' => $param,
-            );
+            if ($cdate1 != $input[$field] && $cdate2 != $input[$field])
+            {
+                return array(
+                    'field'      => $field,
+                    'value'      => $input[$field],
+                    'rule'       => __FUNCTION__,
+                    'param' => $param,
+                );
+            }
+        } else {
+            $date = \DateTime::createFromFormat($param, $input[$field]);
+
+            if ($date === false || $input[$field] != date($param, $date->getTimestamp()))
+            {
+                return array(
+                    'field'      => $field,
+                    'value'      => $input[$field],
+                    'rule'       => __FUNCTION__,
+                    'param' => $param,
+                );
+            }
         }
     }
 
