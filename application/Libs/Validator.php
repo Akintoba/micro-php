@@ -4,7 +4,7 @@ namespace Mini\Libs;
 
 class Validator
 {
-    // Singleton instance of GUMP
+    // Singleton instance of VALIDATOR
     protected static $instance = null;
 
     // Validation rules for execution
@@ -33,7 +33,7 @@ class Validator
     /**
      * Function to create and return previously created instance
      *
-     * @return GUMP
+     * @return VALIDATOR
      */
 
     public static function get_instance(){
@@ -83,18 +83,18 @@ class Validator
      * Shorthand method for inline validation.
      *
      * @param array $data       The data to be validated
-     * @param array $validators The GUMP validators
+     * @param array $validators The VALIDATOR validators
      *
      * @return mixed True(boolean) or the array of error messages
      */
     public static function is_valid(array $data, array $validators)
     {
-        $gump = self::get_instance();
+        $validator = self::get_instance();
 
-        $gump->validation_rules($validators);
+        $validator->validation_rules($validators);
 
-        if ($gump->run($data) === false) {
-            return $gump->get_readable_errors(false);
+        if ($validator->run($data) === false) {
+            return $validator->get_readable_errors(false);
         } else {
             return true;
         }
@@ -110,9 +110,9 @@ class Validator
      */
     public static function filter_input(array $data, array $filters)
     {
-        $gump = self::get_instance();
+        $validator = self::get_instance();
 
-        return $gump->filter($data, $filters);
+        return $validator->filter($data, $filters);
     }
 
     /**
@@ -483,7 +483,7 @@ class Validator
      *
      * Usage:
      *
-     * GUMP::set_field_names(array(
+     * VALIDATOR::set_field_names(array(
      *  "name" => "My Lovely Name",
      *  "username" => "My Beloved Username",
      * ));
@@ -505,7 +505,7 @@ class Validator
      */
     public static function set_error_message($rule, $message)
     {
-        $gump = self::get_instance();
+        $validator = self::get_instance();
         self::$validation_methods_errors[$rule] = $message;
     }
 
@@ -514,7 +514,7 @@ class Validator
      *
      * Usage:
      *
-     * GUMP::set_error_messages(array(
+     * VALIDATOR::set_error_messages(array(
      *  "validate_required"     => "{field} is required",
      *  "validate_valid_email"  => "{field} must be a valid email",
      * ));
@@ -554,7 +554,7 @@ class Validator
      * @return array
      * @return string
      */
-    public function get_readable_errors($convert_to_string = false, $field_class = 'gump-field', $error_class = 'gump-error-message')
+    public function get_readable_errors($convert_to_string = false, $field_class = 'VALIDATOR-field', $error_class = 'VALIDATOR-error-message')
     {
         if (empty($this->errors)) {
             return ($convert_to_string) ? null : array();
@@ -1638,7 +1638,7 @@ class Validator
     /**
      * Determine if the input is a valid human name [Credits to http://github.com/ben-s].
      *
-     * See: https://github.com/Wixel/GUMP/issues/5
+     * See: https://github.com/Wixel/VALIDATOR/issues/5
      * Usage: '<index>' => 'valid_name'
      *
      * @param string $field

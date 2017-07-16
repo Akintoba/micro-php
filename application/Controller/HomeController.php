@@ -16,28 +16,24 @@ class HomeController
 
 		$_POST = $validator->sanitize($_POST);
 
-		$validator->validation_rules(array(
-			'username'	=> 'required|alpha_numeric|max_len,100|min_len,6',
-			'email'		=> 'required',
-			'password'	=> 'required|min_len,8'
-		));
+		$rules = array(
+			'username'    => 'required|alpha_numeric|max_len,100|min_len,8',
+			'password'    => 'required|max_len,100|min_len,8'
+		);
 
-		$validator->filter_rules(array(
-			'username'	=> 'trim|sanitize_string',
-			'email'		=> 'trim|sanitize_string',
-			'password'	=> 'trim|sanitize_string'
-		));
+		$filters = array(
+			'username' 	  => 'trim|sanitize_string',
+			'password'	  => 'trim|base64_encode'
+		);
 
-		$validated = $validator->run($_POST);
+		$validated = $validator->validate($_POST, $rules);
+		$_POST 	   = $validator->filter($_POST, $filters);
 
-		if($validated === false){
-			$validated = $validator->get_readable_errors(true);
-			echo $validated;
+		if($validated === TRUE) {
+			print_r($_POST);
 		}
-
-		else{
-			echo "Success:";
-			print_r($validated);
+		else {
+			echo $validator->get_readable_errors(true);
 		}
 	}
 }
