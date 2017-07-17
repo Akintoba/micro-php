@@ -7,7 +7,9 @@ class HomeController
 {
 	public function index()
 	{
-		require VIEW. 'home/index.php';
+		require VIEW . '_template/header.php';
+		require VIEW . 'home/index.php';
+		require VIEW . '_template/footer.php';
 	}
 
 	public function validate()
